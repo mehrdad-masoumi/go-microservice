@@ -1,0 +1,75 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Server API",
+        "title": "Golang",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:1320",
+    "basePath": "/",
+    "paths": {
+        "/auth/register": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "node register",
+                "parameters": [
+                    {
+                        "description": "payload",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.NodeRegisterRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        }
+    },
+    "definitions": {
+        "dto.NodeRegisterRequest": {
+            "type": "object",
+            "properties": {
+                "confirm_password": {
+                    "type": "string",
+                    "example": "123456"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "mehrdad@gmail.com"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 10
+                },
+                "parent_id": {
+                    "type": "integer",
+                    "example": 10
+                },
+                "password": {
+                    "type": "string",
+                    "example": "123456"
+                },
+                "phone_number": {
+                    "type": "string",
+                    "example": "09120246217"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "mehrdad"
+                },
+                "wallet_id": {
+                    "type": "string",
+                    "example": "TZJjSqfXwTP5YgjdhLdRV1zqpDwDsgdZZE"
+                }
+            }
+        }
+    }
+}

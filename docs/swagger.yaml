@@ -1,0 +1,52 @@
+basePath: /
+definitions:
+  dto.NodeRegisterRequest:
+    properties:
+      confirm_password:
+        example: "123456"
+        type: string
+      email:
+        example: mehrdad@gmail.com
+        type: string
+      id:
+        example: 10
+        type: integer
+      parent_id:
+        example: 10
+        type: integer
+      password:
+        example: "123456"
+        type: string
+      phone_number:
+        example: "09120246217"
+        type: string
+      username:
+        example: mehrdad
+        type: string
+      wallet_id:
+        example: TZJjSqfXwTP5YgjdhLdRV1zqpDwDsgdZZE
+        type: string
+    type: object
+host: localhost:1320
+info:
+  contact: {}
+  description: Server API
+  title: Golang
+  version: "1.0"
+paths:
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: payload
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/dto.NodeRegisterRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: node register
+swagger: "2.0"

@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GoORMHelperCache">
+    <option name="schemaMapping">
+      <map>
+        <entry key="Application">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Config">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/config/config.go" />
+              <option value="file://$PROJECT_DIR$/logger/logger.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="DB">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/repository/mysql/node_repo/node.go" />
+              <option value="file://$PROJECT_DIR$/repository/mysql/user_repo/user.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="HTTPServer">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Mysql">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Node">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/entity/node.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="NodeCreateRequest">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/dto/node_service.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="NodeCreateResponse">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/dto/node_service.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="NodeHandler">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/delivery/http/handler/node_handler/node.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="NodeInfo">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/dto/node_service.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="NodeRegisterRequest">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/dto/node_register.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="NodeRegisterResponse">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/dto/node_register.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="NodeService">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/service/node_svc/node.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Rabbitmq">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/config/config.go" />
+              <option value="file://$PROJECT_DIR$/pkg/rabitmq/rabitmq.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Redis">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Server">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/delivery/http/server.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Service">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/service/user_svc/user.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Spec">
+          <value>
+            <set>
+              <option value="file://$USER_HOME$/go/pkg/mod/github.com/swaggo/swag@v1.8.12/spec.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/entity/user.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserCreateRequest">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/dto/user_service.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserCreateResponse">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/dto/user_service.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserInfo">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/dto/user_service.go" />
+              <option value="file://$PROJECT_DIR$/entity/user_info.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserRepository">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/mocks/UserRepository.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserService">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/service/user_svc/user.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Wallet">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/entity/wallet.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ZapLogger">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/config/config.go" />
+            </set>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="scannedPathMapping">
+      <map>
+        <entry key="file://$USER_HOME$/go/pkg/mod/github.com/swaggo/swag@v1.8.12/spec.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729581492892" />
+              <option name="schema">
+                <list>
+                  <option value="Spec" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/cmd/consumer/otp_consumer.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729080815760" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/config/config.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729599041950" />
+              <option name="schema">
+                <list>
+                  <option value="Config" />
+                  <option value="Application" />
+                  <option value="HTTPServer" />
+                  <option value="Mysql" />
+                  <option value="Redis" />
+                  <option value="Rabbitmq" />
+                  <option value="ZapLogger" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/contract/broker.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729085047119" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/delivery/http/handler/node_handler/node.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729610445168" />
+              <option name="schema">
+                <list>
+                  <option value="NodeHandler" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/delivery/http/server.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729598518966" />
+              <option name="schema">
+                <list>
+                  <option value="Server" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/docs/docs.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729581492863" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/dto/node_register.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729603015455" />
+              <option name="schema">
+                <list>
+                  <option value="NodeRegisterRequest" />
+                  <option value="NodeRegisterResponse" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/dto/node_service.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729613191858" />
+              <option name="schema">
+                <list>
+                  <option value="NodeInfo" />
+                  <option value="NodeCreateRequest" />
+                  <option value="NodeCreateResponse" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/dto/user_service.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729610535849" />
+              <option name="schema">
+                <list>
+                  <option value="UserInfo" />
+                  <option value="UserCreateRequest" />
+                  <option value="UserCreateResponse" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/entity/card.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729084873713" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/entity/node.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729520686702" />
+              <option name="schema">
+                <list>
+                  <option value="Node" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/entity/order.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729084859568" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/entity/product.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729084864314" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/entity/user.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729521363930" />
+              <option name="schema">
+                <list>
+                  <option value="User" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/entity/user_info.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729503788195" />
+              <option name="schema">
+                <list>
+                  <option value="UserInfo" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/entity/wallet.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729503945187" />
+              <option name="schema">
+                <list>
+                  <option value="Wallet" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/logger/logger.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729599058412" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/main.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729605264668" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/mocks/UserRepository.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729584533551" />
+              <option name="schema">
+                <list>
+                  <option value="UserRepository" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/pkg/rabitmq/rabitmq.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729077317051" />
+              <option name="schema">
+                <list>
+                  <option value="Rabbitmq" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/pkg/validator/validator.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729341497297" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/pkg/validator/validator_test.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729340840682" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/repository/mysql/db.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729526726247" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/repository/mysql/node_repo/node.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729527713374" />
+              <option name="schema">
+                <list>
+                  <option value="DB" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/repository/mysql/user_repo/user.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729527877905" />
+              <option name="schema">
+                <list>
+                  <option value="DB" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/service/auth_svc/auth.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729527933764" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/service/node_svc/node.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729614265320" />
+              <option name="schema">
+                <list>
+                  <option value="NodeService" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/service/node_svc/node_test.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729613922717" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/service/user_svc/user.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729610904114" />
+              <option name="schema">
+                <list>
+                  <option value="Service" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/service/user_svc/user_test.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729610980534" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/service/wallet_svc/wallet.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1729527933749" />
+            </ScannedPath>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="tableStructMapping">
+      <map>
+        <entry key="application" value="Application" />
+        <entry key="config" value="Config" />
+        <entry key="db" value="DB" />
+        <entry key="http_server" value="HTTPServer" />
+        <entry key="mysql" value="Mysql" />
+        <entry key="node" value="Node" />
+        <entry key="node_create_request" value="NodeCreateRequest" />
+        <entry key="node_create_response" value="NodeCreateResponse" />
+        <entry key="node_handler" value="NodeHandler" />
+        <entry key="node_info" value="NodeInfo" />
+        <entry key="node_register_request" value="NodeRegisterRequest" />
+        <entry key="node_register_response" value="NodeRegisterResponse" />
+        <entry key="node_service" value="NodeService" />
+        <entry key="rabbitmq" value="Rabbitmq" />
+        <entry key="redis" value="Redis" />
+        <entry key="server" value="Server" />
+        <entry key="service" value="Service" />
+        <entry key="spec" value="Spec" />
+        <entry key="user" value="User" />
+        <entry key="user_create_request" value="UserCreateRequest" />
+        <entry key="user_create_response" value="UserCreateResponse" />
+        <entry key="user_info" value="UserInfo" />
+        <entry key="user_repository" value="UserRepository" />
+        <entry key="user_service" value="UserService" />
+        <entry key="wallet" value="Wallet" />
+        <entry key="zap_logger" value="ZapLogger" />
+      </map>
+    </option>
+    <option name="lastTimeChecked" value="1729530546523" />
+  </component>
+</project>
