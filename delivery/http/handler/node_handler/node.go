@@ -25,6 +25,7 @@ func NewNodeHandler(nodeSvc node_svc.NodeService) NodeHandler {
 func (h NodeHandler) register(c echo.Context) error {
 	item := dto.NodeCreateRequest{}
 	c.Bind(&item)
+
 	return c.JSON(http.StatusOK, dto.UserInfo{
 		Id:          1,
 		Username:    "",

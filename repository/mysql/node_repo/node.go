@@ -19,3 +19,7 @@ func (d DB) Create(node entity.Node) (entity.Node, error) {
 	//TODO implement me
 	panic("implement me")
 }
+func (d DB) FindNodeByReferral(referral string) (entity.Node, error) {
+	//TODO implement me
+	panic("implement me")
+}
