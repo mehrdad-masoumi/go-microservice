@@ -31,7 +31,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.NodeCreateRequest"
+                            "$ref": "#/definitions/dto.RegisterRequest"
                         }
                     }
                 ],
@@ -40,12 +40,12 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "dto.NodeCreateRequest": {
+        "dto.RegisterRequest": {
             "type": "object",
             "properties": {
                 "confirm_password": {
                     "type": "string",
-                    "example": "123456"
+                    "example": "123456@mmMM.$"
                 },
                 "email": {
                     "type": "string",
@@ -53,7 +53,7 @@ const docTemplate = `{
                 },
                 "password": {
                     "type": "string",
-                    "example": "123456"
+                    "example": "123456@mmMM.$"
                 },
                 "phone_number": {
                     "type": "string",
@@ -61,7 +61,7 @@ const docTemplate = `{
                 },
                 "referral": {
                     "type": "string",
-                    "example": "L100@2154"
+                    "example": "L100@1245"
                 },
                 "username": {
                     "type": "string",

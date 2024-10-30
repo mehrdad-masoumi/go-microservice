@@ -11,11 +11,6 @@ type DB struct {
 	db *sql.DB
 }
 
-func (d DB) IsEmailUnique(email string) (bool, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
 func NewNodeRepository(db *sql.DB) *DB {
 	return &DB{
 		db: db,
@@ -52,12 +47,11 @@ func (d DB) FindNodeByReferral(referral string) (entity.Node, error) {
 
 	var node entity.Node
 
-	row := d.db.QueryRow(`select id from nodes where nodes.lft_referral = ? or nodes.rgt_referral= ?`,
+	row := d.db.QueryRow(`select id, ancestry from nodes where nodes.lft_referral = ? or nodes.rgt_referral= ?`,
 		referral,
 		referral,
 	)
-
-	err := row.Scan(&node.ID)
+	err := row.Scan(&node.ID, &node.Ancestry)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return entity.Node{}, richerror.New(op).WithErr(err).
@@ -69,4 +63,23 @@ func (d DB) FindNodeByReferral(referral string) (entity.Node, error) {
 	}
 
 	return node, nil
+}
+
+func (d DB) Delete(id uint) (bool, error) {
+
+	const op = "node_repo.IsEmailUnique"
+
+	_, err := d.db.Exec(`delete from nodes where id = ?`, id)
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return true, nil
+		}
+
+		return false, richerror.New(op).WithErr(err).WithMessage(error_msg.ErrorMsgCantScanQueryResult).
+			WithKind(richerror.KindUnexpected)
+	}
+
+	return true, nil
+
 }

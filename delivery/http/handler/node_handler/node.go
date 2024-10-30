@@ -33,7 +33,7 @@ func NewNodeHandler(nodeSvc node_svc.NodeService, nodeValidator node_validator.V
 // @Summary		node register
 // @Accept		json
 // @Produce		json
-// @Param payload body dto.NodeCreateRequest true "payload"
+// @Param payload body dto.RegisterRequest true "payload"
 // @Router		/auth/register [post]
 func (h NodeHandler) register(c echo.Context) error {
 	item := dto.RegisterRequest{}
@@ -62,42 +62,48 @@ func (h NodeHandler) register(c echo.Context) error {
 
 	var userID uint
 
-	workflow.AddStep("register_user", dto.SagaStep{
+	workflow.AddStep("1", dto.SagaStep{
 		Transaction: func() error {
 			resp, err := h.userSvc.Create(userRequest)
 			if err != nil {
+				// TODO - HANDLE ERROR
 				return err
 			}
 			userID = resp.ID
 			return nil
 		},
 		Compensate: func() error {
-			go func() {
-				_, err := h.userSvc.Rollback(userID)
-				if err != nil {
-					// TODO - HANDLE ERROR
-				}
-			}()
+			_, err := h.userSvc.Rollback(userID)
+			if err != nil {
+				// TODO - HANDLE ERROR
+				return err
+			}
 			return nil
 		},
 	})
 
-	workflow.AddStep("register_node", dto.SagaStep{
+	workflow.AddStep("2", dto.SagaStep{
 		Transaction: func() error {
-			resp, err := h.userSvc.Create(userRequest)
+
+			nodeRequest := dto.NodeCreateRequest{
+				UserID:   userID,
+				Referral: item.Referral,
+				WalletId: item.WalletId,
+			}
+
+			resp, err := h.nodeSvc.Create(nodeRequest)
 			if err != nil {
+				// TODO - HANDLE ERROR
 				return err
 			}
 			userID = resp.ID
 			return nil
 		},
 		Compensate: func() error {
-			go func() {
-				_, err := h.nodeSvc.Rollback(userID)
-				if err != nil {
-					// TODO - HANDLE ERROR
-				}
-			}()
+			_, err := h.nodeSvc.Rollback(userID)
+			if err != nil {
+				// TODO - HANDLE ERROR
+			}
 			return nil
 		},
 	})

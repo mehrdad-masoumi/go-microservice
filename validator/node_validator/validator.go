@@ -29,6 +29,7 @@ func (v Validator) ValidateNodeCreateRequest(req dto.RegisterRequest) (map[strin
 	const target = "node_validator.ValidateRegisterRequest"
 
 	err := validation.ValidateStruct(&req,
+
 		validation.Field(&req.Email,
 			validation.Required,
 			is.Email,
@@ -75,15 +76,16 @@ func (v Validator) ValidateNodeCreateRequest(req dto.RegisterRequest) (map[strin
 	return nil, nil
 }
 
-func (v Validator) checkEmailUniqueness(email string) error {
+func (v Validator) checkEmailUniqueness(value interface{}) error {
 
+	email := value.(string)
 	if isUnique, err := v.repo.IsEmailUnique(email); err != nil || !isUnique {
 		if err != nil {
 			return err
 		}
 
 		if !isUnique {
-			return fmt.Errorf(error_msg.ErrorMsgPhoneNumberIsNotUnique)
+			return fmt.Errorf(error_msg.ErrorMsgEmailIsNotUnique)
 		}
 	}
 

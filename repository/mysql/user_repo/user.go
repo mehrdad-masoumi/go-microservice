@@ -20,6 +20,7 @@ func NewUserRepository(db *sql.DB) *DB {
 func (d DB) Create(user entity.User) (entity.User, error) {
 
 	const op = "user_repo.Create"
+
 	res, err := d.db.Exec(`insert into users(email, phone_number, role, password) values (?, ?, ?, ?)`,
 		user.Email,
 		user.PhoneNumber,
@@ -35,7 +36,9 @@ func (d DB) Create(user entity.User) (entity.User, error) {
 
 	id, err := res.LastInsertId()
 	if err != nil {
-		return entity.User{}, richerror.New(op).WithErr(err).WithMeta(map[string]interface{}{"data": user})
+		return entity.User{}, richerror.New(op).
+			WithErr(err).
+			WithMeta(map[string]interface{}{"data": user})
 	}
 
 	user.ID = uint(id)
@@ -59,5 +62,24 @@ func (d DB) IsEmailUnique(email string) (bool, error) {
 	}
 
 	return false, nil
+
+}
+
+func (d DB) Delete(id uint) (bool, error) {
+
+	const op = "node_repo.IsEmailUnique"
+
+	_, err := d.db.Exec(`delete from users where id = ?`, id)
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return true, nil
+		}
+
+		return false, richerror.New(op).WithErr(err).WithMessage(error_msg.ErrorMsgCantScanQueryResult).
+			WithKind(richerror.KindUnexpected)
+	}
+
+	return true, nil
 
 }

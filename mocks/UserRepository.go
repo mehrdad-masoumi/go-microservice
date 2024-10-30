@@ -41,6 +41,34 @@ func (_m *UserRepository) Create(user entity.User) (entity.User, error) {
 	return r0, r1
 }
 
+// Delete provides a mock function with given fields: id
+func (_m *UserRepository) Delete(id uint) (bool, error) {
+	ret := _m.Called(id)
+
+	if len(ret) == 0 {
+		panic("no return value specified for Delete")
+	}
+
+	var r0 bool
+	var r1 error
+	if rf, ok := ret.Get(0).(func(uint) (bool, error)); ok {
+		return rf(id)
+	}
+	if rf, ok := ret.Get(0).(func(uint) bool); ok {
+		r0 = rf(id)
+	} else {
+		r0 = ret.Get(0).(bool)
+	}
+
+	if rf, ok := ret.Get(1).(func(uint) error); ok {
+		r1 = rf(id)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
 // NewUserRepository creates a new instance of UserRepository. It also registers a testing interface on the mock and a cleanup function to assert the mocks expectations.
 // The first argument is typically a *testing.T value.
 func NewUserRepository(t interface {

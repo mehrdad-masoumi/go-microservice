@@ -16,7 +16,7 @@ func TestMakeAncestry(t *testing.T) {
 	ancestry := "/1/2/"
 	userID := uint(3)
 
-	expected := ancestry + "/" + strconv.Itoa(int(userID))
+	expected := ancestry + strconv.Itoa(int(userID)) + "/"
 	result := makeAncestry(ancestry, userID)
 
 	assert.Equal(t, expected, result, "makeAncestry should concatenate ancestry and userID correctly")

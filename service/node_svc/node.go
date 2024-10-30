@@ -10,6 +10,7 @@ import (
 type NodeRepository interface {
 	Create(node entity.Node) (entity.Node, error)
 	FindNodeByReferral(referral string) (entity.Node, error)
+	Delete(id uint) (bool, error)
 }
 
 type NodeService struct {
@@ -53,15 +54,19 @@ func (s NodeService) Create(request dto.NodeCreateRequest) (dto.NodeCreateRespon
 
 func (s NodeService) Rollback(item uint) (any, error) {
 
-	return nil, nil
+	b, err := s.repository.Delete(item)
+	if err != nil {
+		return false, err
+	}
+	return b, nil
 }
 
 func makeAncestry(ancestry string, userID uint) string {
-	return ancestry + "/" + strconv.Itoa(int(userID))
+	return ancestry + strconv.Itoa(int(userID)) + "/"
 }
 
-func makeLine(referral string) entity.Line {
-	return entity.Line(referral[:1])
+func makeLine(referral string) string {
+	return referral[:1]
 }
 
 func makeReferral(line string, userId uint) string {

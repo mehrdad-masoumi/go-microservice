@@ -7,6 +7,7 @@ import (
 
 type UserRepository interface {
 	Create(user entity.User) (entity.User, error)
+	Delete(id uint) (bool, error)
 }
 
 type Service struct {
@@ -40,7 +41,11 @@ func (s Service) Create(request dto.UserCreateRequest) (dto.UserCreateResponse, 
 
 }
 
-func (s Service) Rollback(item uint) (any, error) {
+func (s Service) Rollback(item uint) (bool, error) {
 
-	return nil, nil
+	b, err := s.repository.Delete(item)
+	if err != nil {
+		return false, err
+	}
+	return b, nil
 }
