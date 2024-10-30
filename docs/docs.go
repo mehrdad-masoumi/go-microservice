@@ -31,7 +31,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.NodeRegisterRequest"
+                            "$ref": "#/definitions/dto.NodeCreateRequest"
                         }
                     }
                 ],
@@ -40,7 +40,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "dto.NodeRegisterRequest": {
+        "dto.NodeCreateRequest": {
             "type": "object",
             "properties": {
                 "confirm_password": {
@@ -51,14 +51,6 @@ const docTemplate = `{
                     "type": "string",
                     "example": "mehrdad@gmail.com"
                 },
-                "id": {
-                    "type": "integer",
-                    "example": 10
-                },
-                "parent_id": {
-                    "type": "integer",
-                    "example": 10
-                },
                 "password": {
                     "type": "string",
                     "example": "123456"
@@ -66,6 +58,10 @@ const docTemplate = `{
                 "phone_number": {
                     "type": "string",
                     "example": "09120246217"
+                },
+                "referral": {
+                    "type": "string",
+                    "example": "L100@2154"
                 },
                 "username": {
                     "type": "string",

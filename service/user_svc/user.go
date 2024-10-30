@@ -39,3 +39,8 @@ func (s Service) Create(request dto.UserCreateRequest) (dto.UserCreateResponse, 
 	}, nil
 
 }
+
+func (s Service) Rollback(item uint) (any, error) {
+
+	return nil, nil
+}

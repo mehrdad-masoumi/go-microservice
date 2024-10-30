@@ -57,49 +57,22 @@ func TestMakeReferral(t *testing.T) {
 
 func TestNodeService_Register_success(t *testing.T) {
 
-	userSvc := &mocks.UserService{}
 	nodeRepo := &mocks.NodeRepository{}
 
 	nodeRequest := dto.NodeCreateRequest{
-		Username:        "mehrdad",
-		Email:           "mehrdad@gmail.com",
-		PhoneNumber:     "09120246217",
-		Referral:        "L100@12135",
-		WalletId:        "TZJjSqfXwTP5YgjdhLdRV1zqpDwDsgdZZE",
-		Password:        "123456789",
-		ConfirmPassword: "123456789",
-	}
-
-	userRequest := dto.UserCreateRequest{
-		Username:        nodeRequest.Username,
-		Email:           nodeRequest.Email,
-		PhoneNumber:     nodeRequest.PhoneNumber,
-		Password:        nodeRequest.Password,
-		ConfirmPassword: nodeRequest.ConfirmPassword,
-	}
-
-	expectedUser := dto.UserCreateResponse{
-		ID: 1,
+		UserID:   10,
+		Referral: "L100@12135",
+		WalletId: "TZJjSqfXwTP5YgjdhLdRV1zqpDwDsgdZZE",
 	}
 
 	expectedNode := entity.Node{
-		Id:          expectedUser.ID,
-		ParentId:    10, // TODO - node parent
+		ID:          10,
+		ParentId:    11, // TODO - node parent
 		Ancestry:    "",
 		Line:        "",
 		LftReferral: "",
 		RgtReferral: "",
 	}
-
-	userSvc.
-		On("Create", mock.MatchedBy(func(req dto.UserCreateRequest) bool {
-			if req.PhoneNumber == userRequest.PhoneNumber && req.Email == userRequest.Email {
-				return true
-			}
-			return false
-		})).
-		Return(expectedUser, nil).
-		Once()
 
 	nodeRepo.
 		On("FindNodeByReferral", nodeRequest.Referral).
@@ -108,7 +81,7 @@ func TestNodeService_Register_success(t *testing.T) {
 
 	nodeRepo.
 		On("Create", mock.MatchedBy(func(node entity.Node) bool {
-			if node.Id == expectedNode.Id {
+			if node.ID == expectedNode.ID {
 				return true
 			}
 			return false
@@ -116,48 +89,36 @@ func TestNodeService_Register_success(t *testing.T) {
 		Return(expectedNode, nil).
 		Once()
 
-	service := NewNodeService(nodeRepo, userSvc)
-	response, err := service.Register(nodeRequest)
+	service := NewNodeService(nodeRepo)
+	response, err := service.Create(nodeRequest)
 
 	assert.NoError(t, err)
 	assert.Equal(t, dto.NodeCreateResponse{
-		NodeId: expectedNode.Id,
+		ID: expectedNode.ID,
 	}, response)
 
-	userSvc.AssertExpectations(t)
 	nodeRepo.AssertExpectations(t)
 
 }
 
 func TestNodeService_Register_failure(t *testing.T) {
 
-	userSvc := &mocks.UserService{}
 	nodeRepo := &mocks.NodeRepository{}
 
 	nodeRequest := dto.NodeCreateRequest{
-		Username:        "mehrdad",
-		Email:           "mehrdad@gmail.com",
-		PhoneNumber:     "09120246217",
-		Referral:        "L100@12135",
-		WalletId:        "TZJjSqfXwTP5YgjdhLdRV1zqpDwDsgdZZE",
-		Password:        "123456789",
-		ConfirmPassword: "123456789",
+		UserID:   10,
+		Referral: "L100@12135",
+		WalletId: "TZJjSqfXwTP5YgjdhLdRV1zqpDwDsgdZZE",
 	}
 
 	expectedError := errors.New("database error")
 
-	userSvc.
-		On("Create", mock.Anything).
-		Return(dto.UserCreateResponse{}, expectedError).
-		Once()
-
-	service := NewNodeService(nodeRepo, userSvc)
-	_, err := service.Register(nodeRequest)
+	service := NewNodeService(nodeRepo)
+	_, err := service.Create(nodeRequest)
 
 	assert.Error(t, err)
 	assert.Equal(t, expectedError, err)
 
-	userSvc.AssertExpectations(t)
 	nodeRepo.AssertExpectations(t)
 
 }

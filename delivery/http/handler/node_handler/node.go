@@ -3,17 +3,30 @@ package node_handler
 import (
 	"github.com/labstack/echo/v4"
 	"mlm/dto"
+	"mlm/pkg/http_msg"
+	"mlm/pkg/saga"
 	"mlm/service/node_svc"
+	"mlm/service/user_svc"
+	"mlm/validator/node_validator"
 	"net/http"
 )
 
-type NodeHandler struct {
-	nodeSvc node_svc.NodeService
+type Workflow interface {
+	AddStep(name string, step dto.SagaStep)
+	Execute() error
 }
 
-func NewNodeHandler(nodeSvc node_svc.NodeService) NodeHandler {
+type NodeHandler struct {
+	nodeSvc       node_svc.NodeService
+	nodeValidator node_validator.Validator
+	userSvc       user_svc.Service
+}
+
+func NewNodeHandler(nodeSvc node_svc.NodeService, nodeValidator node_validator.Validator, userSvc user_svc.Service) NodeHandler {
 	return NodeHandler{
-		nodeSvc: nodeSvc,
+		nodeSvc:       nodeSvc,
+		nodeValidator: nodeValidator,
+		userSvc:       userSvc,
 	}
 }
 
@@ -23,15 +36,81 @@ func NewNodeHandler(nodeSvc node_svc.NodeService) NodeHandler {
 // @Param payload body dto.NodeCreateRequest true "payload"
 // @Router		/auth/register [post]
 func (h NodeHandler) register(c echo.Context) error {
-	item := dto.NodeCreateRequest{}
+	item := dto.RegisterRequest{}
 	c.Bind(&item)
 
-	return c.JSON(http.StatusOK, dto.UserInfo{
-		Id:          1,
-		Username:    "",
-		Email:       item.Email,
-		PhoneNumber: item.PhoneNumber,
+	fieldErrors, err := h.nodeValidator.ValidateNodeCreateRequest(item)
+	if err != nil {
+
+		msg, code := http_msg.Error(err)
+
+		return c.JSON(code, echo.Map{
+			"message": msg,
+			"errors":  fieldErrors,
+		})
+	}
+
+	workflow := saga.New()
+
+	userRequest := dto.UserCreateRequest{
+		Username:        item.Username,
+		Email:           item.Email,
+		PhoneNumber:     item.PhoneNumber,
+		Password:        item.Password,
+		ConfirmPassword: item.ConfirmPassword,
+	}
+
+	var userID uint
+
+	workflow.AddStep("register_user", dto.SagaStep{
+		Transaction: func() error {
+			resp, err := h.userSvc.Create(userRequest)
+			if err != nil {
+				return err
+			}
+			userID = resp.ID
+			return nil
+		},
+		Compensate: func() error {
+			go func() {
+				_, err := h.userSvc.Rollback(userID)
+				if err != nil {
+					// TODO - HANDLE ERROR
+				}
+			}()
+			return nil
+		},
 	})
+
+	workflow.AddStep("register_node", dto.SagaStep{
+		Transaction: func() error {
+			resp, err := h.userSvc.Create(userRequest)
+			if err != nil {
+				return err
+			}
+			userID = resp.ID
+			return nil
+		},
+		Compensate: func() error {
+			go func() {
+				_, err := h.nodeSvc.Rollback(userID)
+				if err != nil {
+					// TODO - HANDLE ERROR
+				}
+			}()
+			return nil
+		},
+	})
+
+	err = workflow.Execute()
+
+	if err != nil {
+		if err != nil {
+			return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+		}
+	}
+
+	return c.JSON(http.StatusCreated, true)
 }
 
 func (h NodeHandler) SetRouter(e *echo.Echo) {

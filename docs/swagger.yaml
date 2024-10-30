@@ -1,6 +1,6 @@
 basePath: /
 definitions:
-  dto.NodeRegisterRequest:
+  dto.NodeCreateRequest:
     properties:
       confirm_password:
         example: "123456"
@@ -8,17 +8,14 @@ definitions:
       email:
         example: mehrdad@gmail.com
         type: string
-      id:
-        example: 10
-        type: integer
-      parent_id:
-        example: 10
-        type: integer
       password:
         example: "123456"
         type: string
       phone_number:
         example: "09120246217"
+        type: string
+      referral:
+        example: L100@2154
         type: string
       username:
         example: mehrdad
@@ -44,7 +41,7 @@ paths:
         name: payload
         required: true
         schema:
-          $ref: '#/definitions/dto.NodeRegisterRequest'
+          $ref: '#/definitions/dto.NodeCreateRequest'
       produces:
       - application/json
       responses: {}

@@ -11,6 +11,7 @@ import (
 	"mlm/repository/mysql/user_repo"
 	"mlm/service/node_svc"
 	"mlm/service/user_svc"
+	"mlm/validator/node_validator"
 )
 
 // @title			Golang
@@ -34,15 +35,22 @@ func main() {
 		log.Fatalf("Error mysql connection:%v", err)
 	}
 
+	// repo
 	nodeRepository := node_repo.NewNodeRepository(db)
 	userRepository := user_repo.NewUserRepository(db)
 
+	//validator
+	nodeValidator := node_validator.NewNodeValidator(nodeRepository)
+
+	// service
 	userSvc := user_svc.NewUserService(userRepository)
-	nodeSrv := node_svc.NewNodeService(nodeRepository, userSvc)
+	nodeSrv := node_svc.NewNodeService(nodeRepository)
 
 	server := http.New(
 		config.AppConfig.Application,
 		nodeSrv,
+		userSvc,
+		nodeValidator,
 	)
 
 	server.Serve()

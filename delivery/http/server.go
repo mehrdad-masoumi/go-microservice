@@ -11,6 +11,8 @@ import (
 	_ "mlm/docs"
 	"mlm/logger"
 	"mlm/service/node_svc"
+	"mlm/service/user_svc"
+	"mlm/validator/node_validator"
 )
 
 type Server struct {
@@ -22,10 +24,12 @@ type Server struct {
 func New(
 	config config.Application,
 	nodeSvc node_svc.NodeService,
+	userSvc user_svc.Service,
+	nodeValidator node_validator.Validator,
 ) Server {
 	return Server{
 		config:      config,
-		nodeHandler: node_handler.NewNodeHandler(nodeSvc),
+		nodeHandler: node_handler.NewNodeHandler(nodeSvc, nodeValidator, userSvc),
 		Router:      echo.New(),
 	}
 }
@@ -48,9 +52,12 @@ func (s Server) Serve() {
 		LogProtocol:      true,
 		LogValuesFunc: func(c echo.Context, v middleware.RequestLoggerValues) error {
 			errMsg := ""
+
 			if v.Error != nil {
 				errMsg = v.Error.Error()
 			}
+
+			logger.Logger.Info("test", zap.Any("all", v))
 
 			logger.Logger.Named("http-server").Info("request",
 				zap.String("request_id", v.RequestID),
@@ -76,10 +83,10 @@ func (s Server) Serve() {
 	s.Router.GET("/swagger/*", echoSwagger.WrapHandler)
 
 	address := fmt.Sprintf(":%s", s.config.HTTPServer.Port)
-	fmt.Printf("start echo server on %s\n", address)
+	logger.Logger.Info("echo", zap.Any("start echo server on", address))
 
 	if err := s.Router.Start(address); err != nil {
-		fmt.Println("echo server error", err)
+		logger.Logger.Info("echo", zap.Any("server error", err))
 	}
 
 }

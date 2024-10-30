@@ -8,7 +8,7 @@ const (
 )
 
 type Node struct {
-	Id          uint
+	ID          uint
 	ParentId    uint
 	Ancestry    string
 	Line        Line

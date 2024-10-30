@@ -12,36 +12,19 @@ type NodeRepository interface {
 	FindNodeByReferral(referral string) (entity.Node, error)
 }
 
-type UserService interface {
-	Create(request dto.UserCreateRequest) (dto.UserCreateResponse, error)
-}
-
 type NodeService struct {
 	repository NodeRepository
-	userSvc    UserService
 }
 
-func NewNodeService(repo NodeRepository, userSvc UserService) NodeService {
+func NewNodeService(repo NodeRepository) NodeService {
 	return NodeService{
 		repository: repo,
-		userSvc:    userSvc,
 	}
 }
 
-func (s NodeService) Register(request dto.NodeCreateRequest) (dto.NodeCreateResponse, error) {
+func (s NodeService) Create(request dto.NodeCreateRequest) (dto.NodeCreateResponse, error) {
 
-	UserCreateRequest := dto.UserCreateRequest{
-		Username:        request.Username,
-		Email:           request.Email,
-		PhoneNumber:     request.PhoneNumber,
-		Password:        request.Password,
-		ConfirmPassword: request.ConfirmPassword,
-	}
-	// create new user in storage
-	userCreated, err := s.userSvc.Create(UserCreateRequest)
-	if err != nil {
-		return dto.NodeCreateResponse{}, err
-	}
+	const target = "node_srv.Register"
 
 	parent, err := s.repository.FindNodeByReferral(request.Referral)
 	if err != nil {
@@ -49,12 +32,12 @@ func (s NodeService) Register(request dto.NodeCreateRequest) (dto.NodeCreateResp
 	}
 
 	node := entity.Node{
-		Id:          userCreated.ID,
-		ParentId:    parent.Id,
-		Ancestry:    makeAncestry(parent.Ancestry, userCreated.ID),
+		ID:          request.UserID,
+		ParentId:    parent.ID,
+		Ancestry:    makeAncestry(parent.Ancestry, request.UserID),
 		Line:        makeLine(request.Referral),
-		LftReferral: makeReferral("L", userCreated.ID),
-		RgtReferral: makeReferral("R", userCreated.ID),
+		LftReferral: makeReferral("L", request.UserID),
+		RgtReferral: makeReferral("R", request.UserID),
 	}
 
 	nodeCreated, err := s.repository.Create(node)
@@ -64,8 +47,13 @@ func (s NodeService) Register(request dto.NodeCreateRequest) (dto.NodeCreateResp
 
 	// return created user
 	return dto.NodeCreateResponse{
-		NodeId: nodeCreated.Id,
+		ID: nodeCreated.ID,
 	}, nil
+}
+
+func (s NodeService) Rollback(item uint) (any, error) {
+
+	return nil, nil
 }
 
 func makeAncestry(ancestry string, userID uint) string {
@@ -75,6 +63,7 @@ func makeAncestry(ancestry string, userID uint) string {
 func makeLine(referral string) entity.Line {
 	return entity.Line(referral[:1])
 }
+
 func makeReferral(line string, userId uint) string {
 	return line + strconv.Itoa(int(userId)) + "@" + strconv.Itoa(utils.RandRange(1000, 9999))
 }
