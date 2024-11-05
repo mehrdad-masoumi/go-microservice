@@ -11,7 +11,7 @@ type Node struct {
 	ID          uint
 	ParentId    uint
 	Ancestry    string
-	Line        string
+	Line        Line
 	LftReferral string
 	RgtReferral string
 }

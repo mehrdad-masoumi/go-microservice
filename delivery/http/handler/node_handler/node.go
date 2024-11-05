@@ -3,11 +3,9 @@ package node_handler
 import (
 	"github.com/labstack/echo/v4"
 	"mlm/dto"
-	"mlm/pkg/http_msg"
 	"mlm/pkg/saga"
 	"mlm/service/node_svc"
 	"mlm/service/user_svc"
-	"mlm/validator/node_validator"
 	"net/http"
 )
 
@@ -17,16 +15,14 @@ type Workflow interface {
 }
 
 type NodeHandler struct {
-	nodeSvc       node_svc.NodeService
-	nodeValidator node_validator.Validator
-	userSvc       user_svc.Service
+	nodeSvc node_svc.NodeService
+	userSvc user_svc.Service
 }
 
-func NewNodeHandler(nodeSvc node_svc.NodeService, nodeValidator node_validator.Validator, userSvc user_svc.Service) NodeHandler {
+func NewNodeHandler(nodeSvc node_svc.NodeService, userSvc user_svc.Service) NodeHandler {
 	return NodeHandler{
-		nodeSvc:       nodeSvc,
-		nodeValidator: nodeValidator,
-		userSvc:       userSvc,
+		nodeSvc: nodeSvc,
+		userSvc: userSvc,
 	}
 }
 
@@ -38,17 +34,6 @@ func NewNodeHandler(nodeSvc node_svc.NodeService, nodeValidator node_validator.V
 func (h NodeHandler) register(c echo.Context) error {
 	item := dto.RegisterRequest{}
 	c.Bind(&item)
-
-	fieldErrors, err := h.nodeValidator.ValidateNodeCreateRequest(item)
-	if err != nil {
-
-		msg, code := http_msg.Error(err)
-
-		return c.JSON(code, echo.Map{
-			"message": msg,
-			"errors":  fieldErrors,
-		})
-	}
 
 	workflow := saga.New()
 
@@ -62,6 +47,7 @@ func (h NodeHandler) register(c echo.Context) error {
 
 	var userID uint
 
+	// TODO - sort order of step
 	workflow.AddStep("1", dto.SagaStep{
 		Transaction: func() error {
 			resp, err := h.userSvc.Create(userRequest)
@@ -108,7 +94,7 @@ func (h NodeHandler) register(c echo.Context) error {
 		},
 	})
 
-	err = workflow.Execute()
+	err := workflow.Execute()
 
 	if err != nil {
 		if err != nil {

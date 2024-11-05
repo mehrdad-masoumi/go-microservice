@@ -15,5 +15,6 @@ type NodeCreateRequest struct {
 }
 
 type NodeCreateResponse struct {
-	ID uint `json:"id"`
+	FieldErrors map[string]string
+	ID          uint `json:"id"`
 }

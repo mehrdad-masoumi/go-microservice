@@ -2,7 +2,9 @@ package entity
 
 type Wallet struct {
 	UserID       uint
-	Credit       uint
-	LockedCredit uint
+	Type         string
+	Deposit      uint
+	Withdraw     uint
+	LockedAmount uint
 	Balance      uint
 }

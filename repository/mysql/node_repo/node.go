@@ -11,6 +11,11 @@ type DB struct {
 	db *sql.DB
 }
 
+func (d DB) IsEmailUnique(email string) (bool, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
 func NewNodeRepository(db *sql.DB) *DB {
 	return &DB{
 		db: db,

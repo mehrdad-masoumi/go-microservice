@@ -13,13 +13,19 @@ type NodeRepository interface {
 	Delete(id uint) (bool, error)
 }
 
-type NodeService struct {
-	repository NodeRepository
+type NodeValidator interface {
+	Validate(request dto.RegisterRequest) (map[string]string, error)
 }
 
-func NewNodeService(repo NodeRepository) NodeService {
+type NodeService struct {
+	repository NodeRepository
+	validator  NodeValidator
+}
+
+func NewNodeService(repo NodeRepository, validator NodeValidator) NodeService {
 	return NodeService{
 		repository: repo,
+		validator:  validator,
 	}
 }
 
@@ -65,8 +71,8 @@ func makeAncestry(ancestry string, userID uint) string {
 	return ancestry + strconv.Itoa(int(userID)) + "/"
 }
 
-func makeLine(referral string) string {
-	return referral[:1]
+func makeLine(referral string) entity.Line {
+	return entity.Line(referral[:1])
 }
 
 func makeReferral(line string, userId uint) string {

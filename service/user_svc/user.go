@@ -3,6 +3,7 @@ package user_svc
 import (
 	"mlm/dto"
 	"mlm/entity"
+	"mlm/pkg/richerror"
 )
 
 type UserRepository interface {
@@ -10,17 +11,29 @@ type UserRepository interface {
 	Delete(id uint) (bool, error)
 }
 
-type Service struct {
-	repository UserRepository
+type UserValidator interface {
+	Validate(request dto.UserCreateRequest) (map[string]string, error)
 }
 
-func NewUserService(repo UserRepository) Service {
+type Service struct {
+	repository UserRepository
+	validator  UserValidator
+}
+
+func NewUserService(repo UserRepository, validator UserValidator) Service {
 	return Service{
 		repository: repo,
+		validator:  validator,
 	}
 }
 
 func (s Service) Create(request dto.UserCreateRequest) (dto.UserCreateResponse, error) {
+
+	const op = "userService.Create"
+	fieldErrors, err := s.validator.Validate(request)
+	if err != nil {
+		return dto.UserCreateResponse{FieldErrors: fieldErrors}, richerror.New(op).WithErr(err)
+	}
 
 	user := entity.User{
 		ID:          0,
@@ -43,9 +56,10 @@ func (s Service) Create(request dto.UserCreateRequest) (dto.UserCreateResponse, 
 
 func (s Service) Rollback(item uint) (bool, error) {
 
+	const op = "userService.Rollback"
 	b, err := s.repository.Delete(item)
 	if err != nil {
-		return false, err
+		return false, richerror.New(op).WithErr(err)
 	}
 	return b, nil
 }

@@ -85,3 +85,37 @@ func TestUserService_Register_Failure(t *testing.T) {
 	// Assert that all mock expectations were met
 	userRepo.AssertExpectations(t)
 }
+
+func TestUserService_rollback_success(t *testing.T) {
+
+	userRepository := &mocks.UserRepository{}
+
+	userRepository.On("Delete", uint(10)).Return(true, nil).Once()
+
+	service := user_svc.NewUserService(userRepository)
+
+	response, err := service.Rollback(10)
+
+	assert.NoError(t, err)
+	assert.Equal(t, true, response)
+
+	userRepository.AssertExpectations(t)
+}
+
+func TestUserService_rollback_failure(t *testing.T) {
+
+	userRepository := &mocks.UserRepository{}
+
+	expectedError := errors.New("unexpected")
+
+	userRepository.On("Delete", uint(10)).Return(false, expectedError).Once()
+
+	service := user_svc.NewUserService(userRepository)
+
+	response, err := service.Rollback(10)
+
+	assert.Error(t, err)
+	assert.Equal(t, false, response)
+
+	userRepository.AssertExpectations(t)
+}

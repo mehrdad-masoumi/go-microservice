@@ -61,27 +61,36 @@ func TestNodeService_Register_success(t *testing.T) {
 
 	nodeRequest := dto.NodeCreateRequest{
 		UserID:   10,
-		Referral: "L100@12135",
+		Referral: "L12@1245",
 		WalletId: "TZJjSqfXwTP5YgjdhLdRV1zqpDwDsgdZZE",
 	}
 
-	expectedNode := entity.Node{
+	expectedParentNode := entity.Node{
 		ID:          10,
-		ParentId:    11, // TODO - node parent
-		Ancestry:    "",
-		Line:        "",
-		LftReferral: "",
-		RgtReferral: "",
+		ParentId:    11,
+		Ancestry:    "/10/11/",
+		Line:        "L",
+		LftReferral: "L11@1245",
+		RgtReferral: "R11@1245",
+	}
+
+	expectedNode := entity.Node{
+		ID:          12,
+		ParentId:    10,
+		Ancestry:    "/10/11/12/",
+		Line:        "L",
+		LftReferral: "L12@1245",
+		RgtReferral: "R12@1245",
 	}
 
 	nodeRepo.
 		On("FindNodeByReferral", nodeRequest.Referral).
-		Return(expectedNode, nil).
+		Return(expectedParentNode, nil).
 		Once()
 
 	nodeRepo.
 		On("Create", mock.MatchedBy(func(node entity.Node) bool {
-			if node.ID == expectedNode.ID {
+			if node.ParentId == expectedParentNode.ID {
 				return true
 			}
 			return false
@@ -111,7 +120,12 @@ func TestNodeService_Register_failure(t *testing.T) {
 		WalletId: "TZJjSqfXwTP5YgjdhLdRV1zqpDwDsgdZZE",
 	}
 
-	expectedError := errors.New("database error")
+	expectedError := errors.New("unexpected error")
+
+	nodeRepo.
+		On("FindNodeByReferral", nodeRequest.Referral).
+		Return(entity.Node{}, expectedError).
+		Once()
 
 	service := NewNodeService(nodeRepo)
 	_, err := service.Create(nodeRequest)

@@ -1,4 +1,4 @@
-package node_validator
+package user_validator
 
 import (
 	"fmt"
@@ -20,11 +20,11 @@ type Validator struct {
 	repo Repository
 }
 
-func NewNodeValidator(repo Repository) Validator {
+func NewUserValidator(repo Repository) Validator {
 	return Validator{repo: repo}
 }
 
-func (v Validator) Validate(req dto.RegisterRequest) (map[string]string, error) {
+func (v Validator) Validate(req dto.UserCreateRequest) (map[string]string, error) {
 
 	const target = "node_validator.ValidateRegisterRequest"
 
@@ -38,11 +38,6 @@ func (v Validator) Validate(req dto.RegisterRequest) (map[string]string, error) 
 		validation.Field(&req.Username,
 			validation.Required,
 			validation.Length(3, 20),
-		),
-
-		validation.Field(&req.Referral,
-			validation.Required,
-			validation.Match(regexp.MustCompile(`\w{1}\d+@\d{4}$`)),
 		),
 
 		validation.Field(&req.Password,

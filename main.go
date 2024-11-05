@@ -12,6 +12,7 @@ import (
 	"mlm/service/node_svc"
 	"mlm/service/user_svc"
 	"mlm/validator/node_validator"
+	"mlm/validator/user_validator"
 )
 
 // @title			Golang
@@ -41,10 +42,11 @@ func main() {
 
 	//validator
 	nodeValidator := node_validator.NewNodeValidator(nodeRepository)
+	userValidator := user_validator.NewUserValidator(userRepository)
 
 	// service
-	userSvc := user_svc.NewUserService(userRepository)
-	nodeSrv := node_svc.NewNodeService(nodeRepository)
+	nodeSrv := node_svc.NewNodeService(nodeRepository, nodeValidator)
+	userSvc := user_svc.NewUserService(userRepository, userValidator)
 
 	server := http.New(
 		config.AppConfig.Application,

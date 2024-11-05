@@ -11,6 +11,11 @@ type DB struct {
 	db *sql.DB
 }
 
+func (d DB) FindNodeByReferral(referral string) (entity.Node, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
 func NewUserRepository(db *sql.DB) *DB {
 	return &DB{
 		db: db,

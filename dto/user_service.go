@@ -16,5 +16,6 @@ type UserCreateRequest struct {
 }
 
 type UserCreateResponse struct {
-	ID uint `json:"id"`
+	FieldErrors map[string]string
+	ID          uint `json:"id"`
 }
